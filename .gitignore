@@ -102,3 +102,10 @@ dist
 
 # TernJS port file
 .tern-port
+
+#
+# ### ここから手動追加ゾーン
+#
+
+# UI設計データは出力画像のみ
+*.xd
