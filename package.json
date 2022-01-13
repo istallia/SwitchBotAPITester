@@ -1,0 +1,22 @@
+{
+  "name": "switchbotapitester",
+  "version": "1.0.0",
+  "description": "SwitchBot API Tester",
+  "main": "js/index.js",
+  "scripts": {
+    "electron": ".\\node_modules\\.bin\\electron.cmd"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/istallia/SwitchBotAPITester.git"
+  },
+  "author": "istallia",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/istallia/SwitchBotAPITester/issues"
+  },
+  "homepage": "https://github.com/istallia/SwitchBotAPITester#readme",
+  "dependencies": {
+    "electron": "^16.0.7"
+  }
+}
