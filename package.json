@@ -2,9 +2,9 @@
   "name": "switchbotapitester",
   "version": "1.0.0",
   "description": "SwitchBot API Tester",
-  "main": "js/index.js",
+  "main": "app/index.js",
   "scripts": {
-    "start"   : ".\\node_modules\\.bin\\electron.cmd .\\js\\index.js",
+    "start"   : ".\\node_modules\\.bin\\electron.cmd .\\app\\index.js",
     "electron": ".\\node_modules\\.bin\\electron.cmd"
   },
   "repository": {
