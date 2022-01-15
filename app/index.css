@@ -144,7 +144,11 @@ div.inspector {
     transform: scale(1, -1); }
 
 /* --- メインエリアに関するスタイル --- */
-div.main > h2 {
-  margin: 0.6rem 0.8rem; }
+div.main {
+  /* リスト */ }
+  div.main > h2 {
+    margin: 0.6rem 0.8rem; }
+  div.main ul.list {
+    list-style: none; }
 
 /*# sourceMappingURL=index.css.map */
