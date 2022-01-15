@@ -2,7 +2,6 @@
 const switchMainArea = event => {
 	/* ハッシュがなければ解散 */
 	const url = new URL(event.newURL);
-	console.log(url.hash);
 	if (url.hash.length < 1) url.hash = '#section-token';
 	/* 現在の要素を非表示 */
 	document.querySelector('.main.selected'   ).classList.remove('selected');
