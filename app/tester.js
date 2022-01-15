@@ -1,6 +1,9 @@
 /* --- インスペクターエリアの出し入れ --- */
 document.addEventListener('DOMContentLoaded', () => {
-	document.querySelector('.inspector-opener').addEventListener('click', event => document.querySelector('.inspector').classList.toggle('opened'));
+	document.querySelector('.inspector-opener').addEventListener('click', event => {
+		event.preventDefault();
+		document.querySelector('.inspector').classList.toggle('opened')
+	});
 });
 
 
