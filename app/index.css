@@ -114,7 +114,7 @@ div.inspector {
       display: flex; }
       div.inspector > div.address-bar > div.url-bar > span {
         margin: auto 1.0rem; }
-  div.inspector.opened > div.address-bar > div.inspector-opener {
+  div.inspector.opened > div.address-bar > a.inspector-opener {
     transform: scale(1, -1); }
 
 /*# sourceMappingURL=index.css.map */

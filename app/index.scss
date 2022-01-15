@@ -128,7 +128,7 @@ div.inspector {
 		}
 	}
 	/* インスペクター表示時は記号を反転 */
-	&.opened > div.address-bar > div.inspector-opener {
+	&.opened > div.address-bar > a.inspector-opener {
 		transform : scale(1, -1);
 	}
 }
