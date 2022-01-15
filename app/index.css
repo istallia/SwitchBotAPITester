@@ -16,19 +16,28 @@ nav.sidebar {
 nav.sidebar {
   z-index: 100;
   position: relative;
-  box-shadow: 0px 0px 8px -2px black; }
+  box-shadow: -6px 0px 8px 4px black; }
   nav.sidebar > div {
     width: calc(100% - 1.0rem);
     height: calc(48px - 1.0rem);
     margin: 0px;
     padding: 0.5rem;
+    user-select: none;
     display: flex;
     justify-content: left;
     align-items: center;
+    /* メニューは選択できるアピール */
     /* タイトルだけ高さが違う */
     /* Aboutは下 */ }
     nav.sidebar > div > span {
       padding-left: 0.5rem; }
+    nav.sidebar > div.content {
+      cursor: pointer;
+      transition: background-color 0.15s ease-out; }
+      nav.sidebar > div.content:hover {
+        background-color: #eee; }
+      nav.sidebar > div.content.selected {
+        background-color: #ccc; }
     nav.sidebar > div.title {
       height: calc(72px - 1.0rem); }
       nav.sidebar > div.title > h1 {
