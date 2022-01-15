@@ -1,24 +1,39 @@
 /* --- ページ全体のレイアウトに関するスタイル --- */
 body {
-	width   : 100vw;
-	height  : 100vh;
-	margin  : 0px;
-	padding : 0px;
+	width    : 100vw;
+	height   : 100vh;
+	margin   : 0px;
+	padding  : 0px;
+	position : relative;
+	overflow : hidden;
 }
 nav.sidebar {
+	z-index   : 100;
 	width     : 256px;
 	height    : calc(100vh - 48px);
 	margin    : 0px;
 	padding   : 0px;
+}
+div.inspector {
+	z-index    : 200;
+	width      : 100vw;
+	height     : 100vh;
+	margin     : 0px;
+	padding    : 0px;
+	bottom     : calc(48px - 100vh);
+	position   : absolute;
+	transition : bottom 0.3s ease-out;
+	&.opened {
+		bottom : 0px;
+	}
 }
 
 
 
 /* --- サイドバーに関するスタイル --- */
 nav.sidebar {
-	z-index    : 100;
-	position   : relative;
-	box-shadow : -6px 0px 8px 4px black;
+	position     : relative;
+	border-right : solid 1px #ccc;
 	> div {
 		width           : calc(100% - 1.0rem);
 		height          : calc(48px - 1.0rem);
@@ -57,5 +72,46 @@ nav.sidebar {
 			position : absolute;
 			bottom   : 0px;
 		}
+	}
+}
+
+
+
+/* --- インスペクターエリアに関するスタイル --- */
+div.inspector {
+	box-shadow : 0px 6px 8px 4px #222;
+	background-color : white;
+	/* アドレスバー(常時表示) */
+	> div.address-bar {
+		position : relative;
+		> div.inspector-opener {
+			width      : calc(48px - 24px);
+			height     : calc(48px - 24px);
+			margin     : 0px;
+			padding    : 12px;
+			top        : 0px;
+			left       : 0px;
+			position   : absolute;
+			cursor     : pointer;
+			transition : background-color 0.15s ease-out;
+			&:hover {
+				background-color : #eee;
+			}
+		}
+		> div.url-bar {
+			width    : calc(100% - 48px);
+			height   : 48px;
+			margin   : 0px;
+			padding  : 0px;
+			top      : 0px;
+			left     : 48px;
+			position : absolute;
+			display  : flex;
+			> span { margin : auto 1.0rem; }
+		}
+	}
+	/* インスペクター表示時は記号を反転 */
+	&.opened > div.address-bar > div.inspector-opener {
+		transform : scale(1, -1);
 	}
 }
