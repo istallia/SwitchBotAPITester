@@ -19,10 +19,22 @@ window.addEventListener('hashchange', switchMainArea);
 
 
 /* --- インスペクターエリアの出し入れ --- */
+const toggleInspectorArea = () => {
+	document.querySelector('.inspector').classList.toggle('opened');
+};
 document.addEventListener('DOMContentLoaded', () => {
-	document.querySelector('.inspector-opener').addEventListener('click', event => {
-		document.querySelector('.inspector').classList.toggle('opened');
-	});
+	document.querySelector('.inspector-opener').addEventListener('click', toggleInspectorArea);
+});
+
+
+
+/* --- URLのコピー --- */
+const copyURL = () => {
+	const url = document.getElementById('url-bar').innerText.replace(/^[A-Z]+\s+/, '');
+	navigator.clipboard.writeText(url);
+};
+document.addEventListener('DOMContentLoaded', () => {
+	document.querySelector('.url-copier').addEventListener('click', copyURL);
 });
 
 
