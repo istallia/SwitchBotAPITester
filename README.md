@@ -6,6 +6,12 @@ SwitchBot APIをお手軽に試したいとき用のソフト
 
 - Japanese (here)
 
+## コマンド
+
+	npm start : アプリケーションを開始
+	npm run build-win : Windows版をビルド
+	npm run build-mac : Mac版をビルド
+
 ## 開発目標
 
 - 開発者トークンを入力すればREST APIを通じてデバイスを制御することができる
