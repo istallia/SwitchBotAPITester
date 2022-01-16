@@ -5,7 +5,9 @@
   "main": "app/index.js",
   "scripts": {
     "start": ".\\node_modules\\.bin\\electron.cmd .\\app\\index.js",
-    "electron": ".\\node_modules\\.bin\\electron.cmd"
+    "electron": ".\\node_modules\\.bin\\electron.cmd",
+    "build-win": ".\\node_modules\\.bin\\electron-builder.cmd --win --x64",
+    "build-mac": ".\\node_modules\\.bin\\electron-builder.cmd --mac --x64"
   },
   "repository": {
     "type": "git",
@@ -17,9 +19,36 @@
     "url": "https://github.com/istallia/SwitchBotAPITester/issues"
   },
   "homepage": "https://github.com/istallia/SwitchBotAPITester#readme",
-  "dependencies": {
-    "axios": "^0.24.0",
+  "devDependencies": {
     "electron": "^16.0.7",
     "electron-builder": "^22.14.5"
+  },
+  "dependencies": {
+    "axios": "^0.24.0"
+  },
+  "build": {
+    "appId": "jp.istallia.switchbot-tester",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "app",
+      "package.json",
+      "package-lock.json"
+    ],
+    "mac": {
+      "icon": "icon/icon_mac.icns",
+      "target": [
+        "dmg"
+      ]
+    },
+    "win": {
+      "icon": "icon/icon_win.ico",
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
   }
 }
