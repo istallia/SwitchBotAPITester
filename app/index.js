@@ -1,9 +1,11 @@
 /* --- ライブラリ(?)の読み込み --- */
 const path          = require('path');
+const axios         = require('axios');
 const electron      = require('electron');
 const app           = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 const ipcMain       = electron.ipcMain;
+
 
 
 /* --- ウィンドウを開く --- */
@@ -41,13 +43,13 @@ const URL_getDeviceList = '/v1.0/devices';
 
 
 /* --- API: デバイス一覧を取得 --- */
-const getDeviceList = token => {
+const getDeviceList = (event, token) => {
 	const url = URL_host + URL_getDeviceList;
-	return fetch(url, {
-		header : {
-			Authorization  : token,
-			'Content-Type' : 'application/json; charset=utf8'
+	return axios.get(url, {
+		headers : {
+			'Authorization' : token,
+			'Content-Type'  : 'application/json; charset=utf8'
 		}
-	});
+	}).then(response => {return {data: response.data, code: response.status}});
 };
-ipcMain.handle('getDeviceList', (event, data) => getDeviceList(data));
+ipcMain.handle('getDeviceList', getDeviceList);
