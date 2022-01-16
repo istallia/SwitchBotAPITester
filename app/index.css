@@ -130,7 +130,7 @@ div.inspector {
       div.inspector > div.address-bar > a.inspector-opener:hover {
         background-color: var(--color-bg-hover); }
     div.inspector > div.address-bar > div.url-bar {
-      width: calc(100% - 48px);
+      width: calc(100% - 48px - 48px);
       height: 48px;
       margin: 0px;
       padding: 0px;
@@ -140,6 +140,19 @@ div.inspector {
       display: flex; }
       div.inspector > div.address-bar > div.url-bar > span {
         margin: auto 1.0rem; }
+    div.inspector > div.address-bar > a.url-copier {
+      width: calc(48px - 24px);
+      height: calc(48px - 24px);
+      margin: 0px;
+      padding: 12px;
+      top: 0px;
+      left: calc(100% - 48px);
+      position: absolute;
+      display: block;
+      cursor: pointer;
+      transition: background-color 0.15s ease-out; }
+      div.inspector > div.address-bar > a.url-copier:hover {
+        background-color: var(--color-bg-hover); }
   div.inspector.opened > div.address-bar > a.inspector-opener {
     transform: scale(1, -1); }
 
