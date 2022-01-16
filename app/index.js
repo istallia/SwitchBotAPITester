@@ -1,4 +1,5 @@
 /* --- ライブラリ(?)の読み込み --- */
+const fs            = require('fs');
 const path          = require('path');
 const axios         = require('axios');
 const electron      = require('electron');
@@ -11,6 +12,8 @@ const ipcMain       = electron.ipcMain;
 /* --- ウィンドウを開く --- */
 let main_window = null;
 app.on('ready', () => {
+	/* コンフィグを読み込む */
+	readConfig();
 	/* ウィンドウを開く */
 	main_window = new BrowserWindow({
 		width     : 1280,
@@ -32,6 +35,35 @@ app.on('ready', () => {
 
 
 /*
+ * ### コンフィグの読み書き
+ */
+
+
+/* --- コンフィグの雛形 --- */
+const config_name = './config.json';
+let config = {
+	token : null
+};
+
+
+
+/* --- コンフィグの書き出し --- */
+const writeConfig = () => {
+	const data = JSON.stringify(config, null, 2);
+	fs.promises.writeFile(config_name, data);
+};
+
+
+
+/* --- コンフィグの読み出し --- */
+const readConfig = () => {
+	if (!fs.existsSync(config_name)) return;
+	fs.promises.readFile(config_name, {encoding: 'utf8'})
+	.then(json => config = JSON.parse(json));
+};
+
+
+/*
  * ### ここからIPC通信
  */
 
@@ -39,6 +71,12 @@ app.on('ready', () => {
 /* --- URLを定義 --- */
 const URL_host          = 'https://api.switch-bot.com';
 const URL_getDeviceList = '/v1.0/devices';
+
+
+
+/* --- API: トークンを取得 --- */
+const getToken = event => config.token;
+ipcMain.handle('getToken', getToken);
 
 
 
@@ -51,7 +89,11 @@ const getDeviceList = (event, token) => {
 			'Content-Type'  : 'application/json; charset=utf8'
 		}
 	})
-	.then(response => {return {data: response.data, code: response.status}})
+	.then(response => {
+		config.token = token;
+		writeConfig();
+		return {data: response.data, code: response.status};
+	})
 	.catch(error => error);
 };
 ipcMain.handle('getDeviceList', getDeviceList);

@@ -18,6 +18,17 @@ window.addEventListener('hashchange', switchMainArea);
 
 
 
+/* --- メインエリア: 保存しておいたトークンの取得 --- */
+const readToken = () => {
+	window.switchbot.getToken()
+	.then(token => {
+		if (token) document.getElementById('token').value = token;
+	});
+};
+document.addEventListener('DOMContentLoaded', readToken);
+
+
+
 /* --- メインエリア: トークンの登録とデバイス一覧の取得 --- */
 const getDeviceList = event => {
 	/* ボタン状態とトークンの有効性を確認 */
