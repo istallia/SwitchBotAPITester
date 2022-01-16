@@ -18,6 +18,55 @@ window.addEventListener('hashchange', switchMainArea);
 
 
 
+/* --- メインエリア: トークンの登録とデバイス一覧の取得 --- */
+const getDeviceList = event => {
+	/* ボタン状態とトークンの有効性を確認 */
+	const token  = document.getElementById('token').value;
+	const button = document.querySelector('.input-token > button');
+	if (token.length < 64 || button.disabled) return;
+	/* ボタンを無効化 */
+	button.disabled = true;
+	/* リクエストを送信 */
+	window.switchbot.getDeviceList(token)
+	.then(response => {
+		/* 子をすべて消す */
+		const ul = document.getElementById('device-list');
+		[... ul.children].forEach(li => li.remove());
+		/* 失敗なら帰る */
+		button.disabled = false;
+		if (!response.code) {
+			const li     = document.createElement('li');
+			li.innerText = response;
+			ul.appendChild(li);
+			return;
+		}
+		/* 取得したデバイスを一覧に追加する */
+		response.data.body.deviceList.forEach(device => {
+			const li     = document.createElement('li');
+			const text   = `${device.deviceType} "${device.deviceName}" (${device.deviceId})`;
+			li.innerText = text;
+			ul.appendChild(li);
+		});
+		response.data.body.infraredRemoteList.forEach(device => {
+			const li     = document.createElement('li');
+			const text   = `[IR] ${device.remoteType} "${device.deviceName}" (${device.deviceId})`;
+			li.innerText = text;
+			ul.appendChild(li);
+		});
+	});
+};
+document.addEventListener('DOMContentLoaded', () => {
+	document.querySelector('.input-token > button').addEventListener('click', getDeviceList);
+	document.getElementById('token').addEventListener('keydown', event => {
+		if (event.key === 'Enter') {
+			event.preventDefault();
+			getDeviceList(event);
+		}
+	});
+});
+
+
+
 /* --- インスペクターエリアの出し入れ --- */
 const toggleInspectorArea = () => {
 	document.querySelector('.inspector').classList.toggle('opened');

@@ -50,6 +50,8 @@ const getDeviceList = (event, token) => {
 			'Authorization' : token,
 			'Content-Type'  : 'application/json; charset=utf8'
 		}
-	}).then(response => {return {data: response.data, code: response.status}});
+	})
+	.then(response => {return {data: response.data, code: response.status}})
+	.catch(error => error);
 };
 ipcMain.handle('getDeviceList', getDeviceList);
