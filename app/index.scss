@@ -5,6 +5,10 @@
 	--color-bg-selected : #ccc;
 	--color-border      : #ccc;
 	--color-text-normal : black;
+	/* フォーム */
+	--color-button-bg-normal   : var(--color-bg-normal);
+	--color-button-bg-hover    : var(--color-bg-hover);
+	--color-button-bg-disabled : #ccc;
 }
 
 
@@ -182,11 +186,43 @@ div.inspector {
 
 /* --- メインエリアに関するスタイル --- */
 div.main {
-	> h2 {
-		margin : 0.6rem 0.8rem;
-	}
+	> *  { margin-left : 0.8rem; }
+	> h2 { margin : 0.6rem 0.8rem; }
 	/* リスト */
 	ul.list {
 		list-style : none;
+	}
+	/* フォーム種別 */
+	div.input-100 {
+		width   : calc(100% - 0.8rem);
+		margin  : 0px 0px 0px 0.8rem;
+		padding : 0px;
+		> input, > textarea {
+			width : 75%;
+		}
+	}
+	/* フォーム細部 */
+	button, input {
+		height        : 1.5rem;
+		margin        : 0.5rem;
+		margin-right  : 0px;
+		padding       : 0.25rem 0.5rem;
+		border        : 1px solid var(--color-border);
+		font-size     : 1rem;
+		border-radius : 0.3rem;
+	}
+	button {
+		box-sizing       : content-box;
+		background-color : var(--color-button-bg-normal);
+		transition       : background-color 0.15s ease-out;
+		&:hover { background-color : var(--color-button-bg-hover); }
+		&[disabled="true"] {
+			background-color : var(--color-button-bg-disabled);
+			&:hover { background-color : var(--color-button-bg-disabled); }
+		}
+	}
+	input[type="text"] {
+		background-color : inherit;
+		color            : inherit;
 	}
 }

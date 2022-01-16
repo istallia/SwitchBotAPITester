@@ -5,7 +5,11 @@
   --color-bg-hover: #eee;
   --color-bg-selected: #ccc;
   --color-border: #ccc;
-  --color-text-normal: black; }
+  --color-text-normal: black;
+  /* フォーム */
+  --color-button-bg-normal: var(--color-bg-normal);
+  --color-button-bg-hover: var(--color-bg-hover);
+  --color-button-bg-disabled: #ccc; }
 
 /* --- ページ全体のレイアウトに関するスタイル --- */
 body {
@@ -158,10 +162,41 @@ div.inspector {
 
 /* --- メインエリアに関するスタイル --- */
 div.main {
-  /* リスト */ }
+  /* リスト */
+  /* フォーム種別 */
+  /* フォーム細部 */ }
+  div.main > * {
+    margin-left: 0.8rem; }
   div.main > h2 {
     margin: 0.6rem 0.8rem; }
   div.main ul.list {
     list-style: none; }
+  div.main div.input-100 {
+    width: calc(100% - 0.8rem);
+    margin: 0px 0px 0px 0.8rem;
+    padding: 0px; }
+    div.main div.input-100 > input, div.main div.input-100 > textarea {
+      width: 75%; }
+  div.main button, div.main input {
+    height: 1.5rem;
+    margin: 0.5rem;
+    margin-right: 0px;
+    padding: 0.25rem 0.5rem;
+    border: 1px solid var(--color-border);
+    font-size: 1rem;
+    border-radius: 0.3rem; }
+  div.main button {
+    box-sizing: content-box;
+    background-color: var(--color-button-bg-normal);
+    transition: background-color 0.15s ease-out; }
+    div.main button:hover {
+      background-color: var(--color-button-bg-hover); }
+    div.main button[disabled="true"] {
+      background-color: var(--color-button-bg-disabled); }
+      div.main button[disabled="true"]:hover {
+        background-color: var(--color-button-bg-disabled); }
+  div.main input[type="text"] {
+    background-color: inherit;
+    color: inherit; }
 
 /*# sourceMappingURL=index.css.map */
