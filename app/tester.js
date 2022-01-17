@@ -65,6 +65,8 @@ const getDeviceList = event => {
 			ul.appendChild(li);
 		});
 	});
+	/* URLバーを更新 */
+	window.switchbot.getAPI('getDeviceList').then(url => updateInspectorURL(url));
 };
 document.addEventListener('DOMContentLoaded', () => {
 	document.querySelector('.input-token > button').addEventListener('click', getDeviceList);
@@ -96,6 +98,18 @@ const copyURL = () => {
 document.addEventListener('DOMContentLoaded', () => {
 	document.querySelector('.url-copier').addEventListener('click', copyURL);
 });
+
+
+
+/* --- インスペクターエリアを更新する(URL) --- */
+const updateInspectorURL = url => {
+	document.getElementById('url-bar').innerText = url;
+};
+
+
+
+/* --- インスペクターエリアを更新する(詳細) --- */
+const updateInspectorDetails = details => {};
 
 
 

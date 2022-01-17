@@ -71,6 +71,40 @@ const readConfig = () => {
 /* --- URLを定義 --- */
 const URL_host          = 'https://api.switch-bot.com';
 const URL_getDeviceList = '/v1.0/devices';
+const URL_getDevice     = '/v1.0/devices/{device_id}/status';
+const URL_setDevice     = '/v1.0/devices/{device_id}/commands';
+const URL_getScenes     = '/v1.0/scenes';
+const URL_executeScene  = '/v1.0/scenes/{scene_id}/execute';
+
+
+
+/* --- 通信詳細オブジェクトを生成 --- */
+const getAxiosDetails = response => {
+	/* オブジェクトを生成 */
+	const details = {};
+	/* 返す */
+	return details;
+};
+
+
+
+/* --- API: URLを取得 --- */
+const getAPI = (event, name, device_id = null) => {
+	switch (name) {
+		case 'getDeviceList':
+			return 'GET ' + URL_host + URL_getDeviceList;
+		case 'getDevice':
+			return 'GET ' + URL_host + URL_getDevice;
+		case 'setDevice':
+			return 'GET ' + URL_host + URL_setDevice;
+		case 'getScenes':
+			return 'GET ' + URL_host + URL_getScenes;
+		case 'executeScene':
+			return 'GET ' + URL_host + URL_executeScene;
+	}
+	return null;
+};
+ipcMain.handle('getAPI', getAPI);
 
 
 
@@ -92,8 +126,8 @@ const getDeviceList = (event, token) => {
 	.then(response => {
 		config.token = token;
 		writeConfig();
-		return {data: response.data, code: response.status};
+		return {data: response.data, code: response.status, details: getAxiosDetails(response)};
 	})
-	.catch(error => error);
+	.catch(error => {return {error:error}});
 };
 ipcMain.handle('getDeviceList', getDeviceList);

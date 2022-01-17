@@ -8,5 +8,6 @@ const ipcRenderer   = electron.ipcRenderer;
 /* --- 関数群を登録 --- */
 contextBridge.exposeInMainWorld('switchbot', {
 	getToken      : async () => await ipcRenderer.invoke('getToken'),
+	getAPI        : async (name, device_id = null) => await ipcRenderer.invoke('getAPI', name, device_id),
 	getDeviceList : async token => await ipcRenderer.invoke('getDeviceList', token)
 });
