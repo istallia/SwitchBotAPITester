@@ -117,6 +117,7 @@ div.inspector {
   box-shadow: 0px 6px 8px 4px #222;
   background-color: var(--color-bg-normal);
   /* アドレスバー(常時表示) */
+  /* 詳細エリア */
   /* インスペクター表示時は記号を反転 */ }
   div.inspector > div.address-bar {
     position: relative; }
@@ -157,6 +158,26 @@ div.inspector {
       transition: background-color 0.15s ease-out; }
       div.inspector > div.address-bar > a.url-copier:hover {
         background-color: var(--color-bg-hover); }
+  div.inspector div.details-area {
+    position: absolute;
+    width: calc(100vw - 1.0rem);
+    height: calc(100vh - 1.0rem - 48px);
+    margin: 0px;
+    padding: 0.5rem;
+    top: 48px;
+    left: 0px;
+    overflow-y: scroll; }
+    div.inspector div.details-area > label {
+      margin-top: 0.5rem;
+      display: block; }
+    div.inspector div.details-area > textarea {
+      width: calc(100% - 1.0rem);
+      height: 10rem;
+      display: block;
+      border: 1px solid var(--color-border);
+      border-radius: 0.3rem;
+      font-family: inherit;
+      font-size: 1rem; }
   div.inspector.opened > div.address-bar > a.inspector-opener {
     transform: scale(1, -1); }
 
