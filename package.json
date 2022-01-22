@@ -44,7 +44,11 @@
     },
     "win": {
       "icon": "icon/icon_win.ico",
-      "target": "portable"
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
     }
   }
 }
