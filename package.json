@@ -1,5 +1,5 @@
 {
-  "name": "switchbotapitester",
+  "name": "SwitchBotAPITester",
   "version": "1.0.0",
   "description": "SwitchBot API Tester",
   "main": "app/index.js",
@@ -47,6 +47,7 @@
       "target": "nsis"
     },
     "nsis": {
+      "artifactName": "${productName}_setup_${version}.${ext}",
       "oneClick": false,
       "allowToChangeInstallationDirectory": true
     }
