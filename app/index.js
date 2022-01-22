@@ -78,16 +78,6 @@ const URL_executeScene  = '/v1.0/scenes/{scene_id}/execute';
 
 
 
-/* --- 通信詳細オブジェクトを生成 --- */
-const getAxiosDetails = response => {
-	/* オブジェクトを生成 */
-	const details = {};
-	/* 返す */
-	return details;
-};
-
-
-
 /* --- API: URLを取得 --- */
 const getAPI = (event, name, device_id = null) => {
 	switch (name) {
@@ -126,7 +116,7 @@ const getDeviceList = (event, token) => {
 	.then(response => {
 		config.token = token;
 		writeConfig();
-		return {data: response.data, code: response.status, details: getAxiosDetails(response)};
+		return {data: response.data, code: response.status, request: {}};
 	})
 	.catch(error => {return {error:error}});
 };

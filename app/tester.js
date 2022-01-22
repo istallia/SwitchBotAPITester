@@ -40,6 +40,8 @@ const getDeviceList = event => {
 	/* リクエストを送信 */
 	window.switchbot.getDeviceList(token)
 	.then(response => {
+		/* 詳細エリアを更新 */
+		updateInspectorDetails(response);
 		/* 子をすべて消す */
 		const ul = document.getElementById('device-list');
 		[... ul.children].forEach(li => li.remove());
@@ -109,7 +111,20 @@ const updateInspectorURL = url => {
 
 
 /* --- インスペクターエリアを更新する(詳細) --- */
-const updateInspectorDetails = details => {};
+const updateInspectorDetails = details => {
+	/* 要素取得 */
+	const request_headers_area  = document.getElementById('request-body');
+	const response_headers_area = document.getElementById('response-body');
+	/* 無なら帰る */
+	if (!details.data) {
+		request_headers_area.value  = '';
+		response_headers_area.value = '';
+		return;
+	}
+	/* それぞれ更新 */
+	request_headers_area.value  = JSON.stringify(details.request, null, 4);
+	response_headers_area.value = JSON.stringify(details.data, null, 4);
+};
 
 
 

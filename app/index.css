@@ -172,12 +172,15 @@ div.inspector {
       display: block; }
     div.inspector div.details-area > textarea {
       width: calc(100% - 1.0rem);
-      height: 10rem;
       display: block;
       border: 1px solid var(--color-border);
       border-radius: 0.3rem;
       font-family: inherit;
       font-size: 1rem; }
+      div.inspector div.details-area > textarea#request-body {
+        height: 7.5rem; }
+      div.inspector div.details-area > textarea#response_body {
+        height: 15rem; }
   div.inspector.opened > div.address-bar > a.inspector-opener {
     transform: scale(1, -1); }
 
