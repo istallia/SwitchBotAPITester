@@ -40,7 +40,7 @@ app.on('ready', () => {
 
 
 /* --- コンフィグの雛形 --- */
-const config_name = './config.json';
+const config_name = path.join(app.getPath('userData'), 'config.json');
 let config = {
 	token : null
 };
@@ -131,3 +131,13 @@ const getDeviceList = (event, token) => {
 	.catch(error => {return {error:error}});
 };
 ipcMain.handle('getDeviceList', getDeviceList);
+
+
+
+/* --- デバッグ用: カレントディレクトリを返す --- */
+ipcMain.handle('getCurrentPath', event => {
+	return {
+		dirname  : app.getPath('userData'),
+		filename : config_name
+	};
+});

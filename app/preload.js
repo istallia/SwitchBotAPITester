@@ -11,3 +11,10 @@ contextBridge.exposeInMainWorld('switchbot', {
 	getAPI        : async (name, device_id = null) => await ipcRenderer.invoke('getAPI', name, device_id),
 	getDeviceList : async token => await ipcRenderer.invoke('getDeviceList', token)
 });
+
+
+
+/* --- デバッグ用の関数群 --- */
+contextBridge.exposeInMainWorld('tester', {
+	getCurrentPath : async () => await ipcRenderer.invoke('getCurrentPath')
+});
