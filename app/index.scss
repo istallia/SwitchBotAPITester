@@ -6,9 +6,10 @@
 	--color-border      : #ccc;
 	--color-text-normal : black;
 	/* フォーム */
-	--color-button-bg-normal   : var(--color-bg-normal);
-	--color-button-bg-hover    : var(--color-bg-hover);
-	--color-button-bg-disabled : #ccc;
+	--color-button-bg-normal     : var(--color-bg-normal);
+	--color-button-bg-hover      : var(--color-bg-hover);
+	--color-button-bg-disabled   : #eee;
+	--color-button-text-disabled : #aaa;
 }
 
 
@@ -227,7 +228,7 @@ div.main {
 		}
 	}
 	/* フォーム細部 */
-	button, input {
+	button, input, select {
 		height        : 1.5rem;
 		margin        : 0.5rem;
 		margin-right  : 0px;
@@ -236,12 +237,16 @@ div.main {
 		font-size     : 1rem;
 		border-radius : 0.3rem;
 	}
+	select {
+		box-sizing : content-box;
+	}
 	button {
 		box-sizing       : content-box;
 		background-color : var(--color-button-bg-normal);
 		transition       : background-color 0.15s ease-out;
 		&:hover { background-color : var(--color-button-bg-hover); }
-		&[disabled="true"] {
+		&[disabled] {
+			color            : var(--color-button-text-disabled);
 			background-color : var(--color-button-bg-disabled);
 			&:hover { background-color : var(--color-button-bg-disabled); }
 		}

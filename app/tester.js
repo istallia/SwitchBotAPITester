@@ -66,6 +66,37 @@ const getDeviceList = event => {
 			li.innerText = text;
 			ul.appendChild(li);
 		});
+		/* デバイス一覧を各ドロップダウンに追加 */
+		const select_get = document.getElementById('devices-get');
+		const select_set = document.getElementById('devices-set');
+		[... select_get.querySelectorAll('option:not(.default-selection)')].forEach(option => option.remove());
+		[... select_set.querySelectorAll('option:not(.default-selection)')].forEach(option => option.remove());
+		select_get.querySelector('option.default-selection').selected = true;
+		select_set.querySelector('option.default-selection').selected = true;
+		response.data.body.deviceList.forEach(device => {
+			const option_get = document.createElement('option');
+			const option_set = document.createElement('option');
+			option_get.innerText = device.deviceName;
+			option_set.innerText = device.deviceName;
+			option_get.value = device.deviceId;
+			option_set.value = device.deviceId;
+			option_get.setAttribute('device-type', device.deviceType);
+			option_set.setAttribute('device-type', device.deviceType);
+			select_get.appendChild(option_get);
+			select_set.appendChild(option_set);
+		});
+		response.data.body.infraredRemoteList.forEach(device => {
+			const option_get = document.createElement('option');
+			const option_set = document.createElement('option');
+			option_get.innerText = device.deviceName;
+			option_set.innerText = device.deviceName;
+			option_get.value = device.deviceId;
+			option_set.value = device.deviceId;
+			option_get.setAttribute('device-type', device.remoteType);
+			option_set.setAttribute('device-type', device.remoteType);
+			select_get.appendChild(option_get);
+			select_set.appendChild(option_set);
+		});
 	});
 	/* URLバーを更新 */
 	window.switchbot.getAPI('getDeviceList').then(url => updateInspectorURL(url));

@@ -69,16 +69,32 @@
 <!-- メインエリア: デバイス情報取得 -->
 <div class="main" id="section-get-devices">
 	<h2 text-data="nav-2">デバイス情報取得</h2>
+	<select id="devices-get">
+		<option class="default-selection" value="" selected="true" text-data="select-device">(デバイスを選択)</option>
+	</select>
+	<button id="get-device" text-data="get-device" disabled="true">デバイスの情報を取得</button>
 </div>
 
 <!-- メインエリア: デバイス制御 -->
 <div class="main" id="section-set-devices">
 	<h2 text-data="nav-3">デバイス制御</h2>
+	<select id="devices-set">
+		<option class="default-selection" value="" selected="true" text-data="select-device">(デバイスを選択)</option>
+	</select>
+	<select id="devices-command">
+		<option class="default-selection" value="" selected="true" text-data="select-command">(コマンドを選択)</option>
+	</select>
+	<button id="set-device" text-data="set-device" disabled="true">コマンドを送信</button>
 </div>
 
 <!-- メインエリア: シーン実行 -->
 <div class="main" id="section-scenes">
 	<h2 text-data="nav-4">シーン実行</h2>
+	<select id="scenes">
+		<option class="default-selection" value="" selected="true" text-data="select-scene">(シーンを選択)</option>
+	</select>
+	<button id="execute-scene" text-data="execute-scene" disabled="true">シーンを実行</button>
+	<button id="get-scenes" text-data="get-scenes">シーンを再取得</button>
 </div>
 
 <!-- メインエリア: このソフトについて -->
