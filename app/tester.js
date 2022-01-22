@@ -29,6 +29,23 @@ document.addEventListener('DOMContentLoaded', readToken);
 
 
 
+/* --- メインエリア: ボタンの有効/無効切り替え --- */
+const switchButtonDisabledGet = event => {
+	document.getElementById('get-device').disabled = (event.currentTarget.value === '');
+};
+const switchButtonDisabledSet = event => {
+	const is_set_device  = document.getElementById('devices-set').value !== '';
+	const is_set_command = document.getElementById('commands'   ).value !== '';
+	document.getElementById('set-device').disabled = !(is_set_device && is_set_command);
+};
+document.addEventListener('DOMContentLoaded', () => {
+	document.getElementById('devices-get').addEventListener('change', switchButtonDisabledGet);
+	document.getElementById('devices-set').addEventListener('change', switchButtonDisabledSet);
+});
+
+
+
+
 /* --- メインエリア: トークンの登録とデバイス一覧の取得 --- */
 const getDeviceList = event => {
 	/* ボタン状態とトークンの有効性を確認 */
@@ -74,32 +91,25 @@ const getDeviceList = event => {
 		select_get.querySelector('option.default-selection').selected = true;
 		select_set.querySelector('option.default-selection').selected = true;
 		response.data.body.deviceList.forEach(device => {
-			const option_get = document.createElement('option');
-			const option_set = document.createElement('option');
-			option_get.innerText = device.deviceName;
-			option_set.innerText = device.deviceName;
-			option_get.value = device.deviceId;
-			option_set.value = device.deviceId;
-			option_get.setAttribute('device-type', device.deviceType);
-			option_set.setAttribute('device-type', device.deviceType);
-			select_get.appendChild(option_get);
-			select_set.appendChild(option_set);
+			select_get.appendChild(createDeviceOption(device));
+			select_set.appendChild(createDeviceOption(device));
 		});
 		response.data.body.infraredRemoteList.forEach(device => {
-			const option_get = document.createElement('option');
-			const option_set = document.createElement('option');
-			option_get.innerText = device.deviceName;
-			option_set.innerText = device.deviceName;
-			option_get.value = device.deviceId;
-			option_set.value = device.deviceId;
-			option_get.setAttribute('device-type', device.remoteType);
-			option_set.setAttribute('device-type', device.remoteType);
-			select_get.appendChild(option_get);
-			select_set.appendChild(option_set);
+			select_get.appendChild(createDeviceOption(device));
+			select_set.appendChild(createDeviceOption(device));
 		});
+		document.getElementById('get-device').disabled = true;
+		document.getElementById('set-device').disabled = true;
 	});
 	/* URLバーを更新 */
 	window.switchbot.getAPI('getDeviceList').then(url => updateInspectorURL(url));
+};
+const createDeviceOption = device => {
+	const option     = document.createElement('option');
+	option.innerText = device.deviceName;
+	option.value     = device.deviceId;
+	option.setAttribute('device-type', device.deviceType || device.remoteType);
+	return option;
 };
 document.addEventListener('DOMContentLoaded', () => {
 	document.querySelector('.input-token > button').addEventListener('click', getDeviceList);
