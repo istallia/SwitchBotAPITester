@@ -47,6 +47,7 @@
       "target": "nsis"
     },
     "nsis": {
+      "include": "installer.nsh",
       "artifactName": "${productName}_setup_${version}.${ext}",
       "oneClick": false,
       "allowToChangeInstallationDirectory": true
