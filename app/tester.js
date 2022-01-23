@@ -1,3 +1,8 @@
+/* --- 広域変数 --- */
+let switchbot_token = null;
+
+
+
 /* --- メインエリアの切り替え --- */
 const switchMainArea = event => {
 	/* ハッシュがなければ解散 */
@@ -38,9 +43,13 @@ const switchButtonDisabledSet = event => {
 	const is_set_command = document.getElementById('commands'   ).value !== '';
 	document.getElementById('set-device').disabled = !(is_set_device && is_set_command);
 };
+const switchButtonDisabledExecuteScene = event => {
+	document.getElementById('execute-scene').disabled = (event.currentTarget.value === '');
+};
 document.addEventListener('DOMContentLoaded', () => {
 	document.getElementById('devices-get').addEventListener('change', switchButtonDisabledGet);
 	document.getElementById('devices-set').addEventListener('change', switchButtonDisabledSet);
+	document.getElementById('scenes').addEventListener('change', switchButtonDisabledExecuteScene);
 });
 
 
@@ -70,6 +79,8 @@ const getDeviceList = event => {
 			ul.appendChild(li);
 			return;
 		}
+		/* トークンを広域変数に保存 */
+		switchbot_token = token;
 		/* 取得したデバイスを一覧に追加する */
 		response.data.body.deviceList.forEach(device => {
 			const li     = document.createElement('li');
@@ -124,8 +135,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-/* --- デバイス情報取得 --- */
+/* --- メインエリア: デバイス情報取得 --- */
 const getDeviceInfo = event => {
+	/* トークン存在確認 */
+	if (!switchbot_token) return;
 	/* ボタン有効チェック */
 	const button = event.currentTarget;
 	if (button.disabled) return;
@@ -170,6 +183,65 @@ const getDeviceInfo = event => {
 };
 document.addEventListener('DOMContentLoaded', () => {
 	document.getElementById('get-device').addEventListener('click', getDeviceInfo);
+});
+
+
+
+/* --- メインエリア: シーンの再取得 --- */
+const getScenes = event => {
+	/* トークン存在確認 */
+	if (!switchbot_token) return;
+	/* ボタン無効化 */
+	const button = event.currentTarget;
+	button.disabled = true;
+	/* リクエストを送信 */
+	window.switchbot.getScenes()
+	.then(response => {
+		/* 詳細エリアを更新 */
+		updateInspectorDetails(response);
+		button.disabled = false;
+		/* 子をすべて消す */
+		const select = document.getElementById('scenes');
+		[... select.querySelectorAll('option:not(.default-selection)')].forEach(option => option.remove());
+		/* 子を追加 */
+		response.data.body.forEach(scene => {
+			const option     = document.createElement('option');
+			option.innerText = scene.sceneName;
+			option.value     = scene.sceneId;
+			select.appendChild(option);
+		});
+	});
+	/* URLバーを更新 */
+	window.switchbot.getAPI('getScenes').then(url => updateInspectorURL(url));
+};
+document.addEventListener('DOMContentLoaded', () => {
+	document.getElementById('get-scenes').addEventListener('click', getScenes);
+});
+
+
+
+/* --- メインエリア: シーンの実行 --- */
+const executeScene = event => {
+	/* トークン存在確認 */
+	if (!switchbot_token) return;
+	/* シーンIDの取得とチェック */
+	const scene_id = document.getElementById('scenes').value;
+	if (scene_id === '') return;
+	/* ボタン無効化 */
+	const button = event.currentTarget;
+	button.disabled = true;
+	/* リクエストを送信 */
+	window.switchbot.executeScene(scene_id)
+	.then(response => {
+		/* 詳細エリアを更新 */
+		updateInspectorDetails(response);
+		button.disabled = false;
+	});
+	/* URLバーを更新 */
+	window.switchbot.getAPI('executeScene', scene_id).then(url => updateInspectorURL(url));
+};
+document.addEventListener('DOMContentLoaded', () => {
+	document.getElementById('execute-scene').addEventListener('click', executeScene);
 });
 
 

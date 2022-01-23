@@ -114,11 +114,11 @@ const getAPI = (event, name, device_id = '') => {
 		case 'getDevice':
 			return 'GET ' + URL_host + URL_getDevice.replace('{device_id}', device_id);
 		case 'setDevice':
-			return 'GET ' + URL_host + URL_setDevice.replace('{device_id}', device_id);
+			return 'POST ' + URL_host + URL_setDevice.replace('{device_id}', device_id);
 		case 'getScenes':
 			return 'GET ' + URL_host + URL_getScenes;
 		case 'executeScene':
-			return 'GET ' + URL_host + URL_executeScene.replace('{scene_id}', device_id);
+			return 'POST ' + URL_host + URL_executeScene.replace('{scene_id}', device_id);
 	}
 	return null;
 };
@@ -152,7 +152,7 @@ ipcMain.handle('getDeviceList', getDeviceList);
 
 
 
-/* --- API: デバイス一覧を取得 --- */
+/* --- API: デバイス情報を取得 --- */
 const getDevice = (event, device_id) => {
 	const url = URL_host + URL_getDevice.replace('{device_id}', device_id);
 	return axios.get(url, {
@@ -167,6 +167,42 @@ const getDevice = (event, device_id) => {
 	.catch(error => {return {error:error}});
 };
 ipcMain.handle('getDevice', getDevice);
+
+
+
+/* --- API: シーン一覧を取得 --- */
+const getScenes = event => {
+	const url = URL_host + URL_getScenes;
+	return axios.get(url, {
+		headers : {
+			'Authorization' : config.token || '',
+			'Content-Type'  : 'application/json; charset=utf8'
+		}
+	})
+	.then(response => {
+		return {data: response.data, code: response.status, request: {}};
+	})
+	.catch(error => {return {error:error}});
+};
+ipcMain.handle('getScenes', getScenes);
+
+
+
+/* --- API: シーンを実行 --- */
+const executeScene = (event, scene_id) => {
+	const url = URL_host + URL_executeScene.replace('{scene_id}', scene_id);
+	return axios.post(url, {}, {
+		headers : {
+			'Authorization' : config.token || '',
+			'Content-Type'  : 'application/json; charset=utf8'
+		}
+	})
+	.then(response => {
+		return {data: response.data, code: response.status, request: {}};
+	})
+	.catch(error => {return {error:error}});
+};
+ipcMain.handle('executeScene', executeScene);
 
 
 
