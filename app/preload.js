@@ -7,9 +7,11 @@ const ipcRenderer   = electron.ipcRenderer;
 
 /* --- 関数群を登録 --- */
 contextBridge.exposeInMainWorld('switchbot', {
-	getToken      : async () => await ipcRenderer.invoke('getToken'),
-	getAPI        : async (name, device_id = null) => await ipcRenderer.invoke('getAPI', name, device_id),
-	getDeviceList : async token => await ipcRenderer.invoke('getDeviceList', token)
+	getToken           : async () => await ipcRenderer.invoke('getToken'),
+	getAPI             : async (name, device_id = null) => await ipcRenderer.invoke('getAPI', name, device_id),
+	checkSupportedType : async type => await ipcRenderer.invoke('checkSupportedType', type),
+	getCommands        : async type => await ipcRenderer.invoke('getCommands', type),
+	getDeviceList      : async token => await ipcRenderer.invoke('getDeviceList', token)
 });
 
 

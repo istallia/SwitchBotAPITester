@@ -12,7 +12,8 @@ const ipcMain       = electron.ipcMain;
 /* --- ウィンドウを開く --- */
 let main_window = null;
 app.on('ready', () => {
-	/* コンフィグを読み込む */
+	/* 各種データを読み込む */
+	readDeviceTypes();
 	readConfig();
 	/* ウィンドウを開く */
 	main_window = new BrowserWindow({
@@ -64,7 +65,34 @@ const readConfig = () => {
 
 
 /*
- * ### ここからIPC通信
+ * ### デバイスタイプデータを読み込み
+ */
+
+
+/* --- デバイスタイプの読み込み --- */
+const device_types_name = path.join(__dirname, 'data/supported-types.json');
+let device_types        = {get: [], set: []};
+const readDeviceTypes = () => {
+	if (!fs.existsSync(device_types_name)) return;
+	fs.promises.readFile(device_types_name, {encoding: 'utf8'})
+	.then(json => device_types = JSON.parse(json) || device_types);
+};
+
+
+
+/* --- データ取得に対応したデバイスか判定 --- */
+const checkSupportedType = (event, type) => device_types.get.includes(type);
+ipcMain.handle('checkSupportedType', checkSupportedType);
+
+
+
+/* --- デバイスタイプに応じた制御コマンド一覧を返す --- */
+const getCommands = (event, type) => device_types.set[type] || null;
+ipcMain.handle('getCommands', getCommands);
+
+
+/*
+ * ### APIとの通信制御
  */
 
 
@@ -127,7 +155,12 @@ ipcMain.handle('getDeviceList', getDeviceList);
 /* --- デバッグ用: カレントディレクトリを返す --- */
 ipcMain.handle('getCurrentPath', event => {
 	return {
-		dirname  : app.getPath('userData'),
-		filename : config_name
+		userData : {
+			dirname  : app.getPath('userData'),
+			filename : config_name
+		},
+		deviceTypes : {
+			filename : device_types_name
+		}
 	};
 });

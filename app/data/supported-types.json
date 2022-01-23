@@ -1,0 +1,143 @@
+{
+	"get" : [
+		"Bot",
+		"Plug",
+		"Curtain",
+		"Meter",
+		"Motion Sensor",
+		"Contact Sensor",
+		"Color Bulb",
+		"Humidifier",
+		"Smart Fan",
+		"Strip Light",
+		"Plug Mini (US)",
+		"Plug Mini (JP)"
+	],
+	"set" : {
+		"Bot" : {
+			"turnOn"  : null,
+			"turnOff" : null,
+			"press"   : null
+		},
+		"Plug" : {
+			"turnOn"  : null,
+			"turnOff" : null
+		},
+		"Curtain" : {
+			"turnOn"      : null,
+			"turnOff"     : null,
+			"setPosition" : [
+				["index", "select", "0", "1"],
+				["mode", "select", "0 (Performance Mode)", "1 (Slient Mode)", "ff (Default Mode)"],
+				["position", "number", 0, 100]
+			]
+		},
+		"Humidifier" : {
+			"turnOn"  : null,
+			"turnOff" : null,
+			"setMode" : [
+				["mode", "text", "desc-humidifier"]
+			]
+		},
+		"Smart Fan" : {
+			"turnOn"       : null,
+			"turnOff"      : null,
+			"setAllStatus" : [
+				["on/off", "select", "on", "off"],
+				["fanMode", "select", "0 (Standard)", "1 (Natural)"],
+				["fanSpeed", "select", "1", "2", "3", "4"],
+				["shakeRange", "number", 0, 120]
+			]
+		},
+		"Color Bulb" : {
+			"turnOn"        : null,
+			"turnOff"       : null,
+			"toggle"        : null,
+			"setBrightness" : ["brightness", "number", 1, 100],
+			"setColor"      : [
+				["red", "number", 0, 255],
+				["green", "number", 0, 255],
+				["blue", "number", 0, 255]
+			],
+			"setColorTemperature" : ["colorTemperature", "number", 2700, 6500]
+		},
+		"Strip Light" : {
+			"turnOn"        : null,
+			"turnOff"       : null,
+			"toggle"        : null,
+			"setBrightness" : ["brightness", "number", 1, 100],
+			"setColor"      : [
+				["red", "number", 0, 255],
+				["green", "number", 0, 255],
+				["blue", "number", 0, 255]
+			]
+		},
+		"Plug Mini (US)" : {
+			"turnOn"  : null,
+			"turnOff" : null,
+			"toggle"  : null
+		},
+		"Plug Mini (JP)" : {
+			"turnOn"  : null,
+			"turnOff" : null,
+			"toggle"  : null
+		},
+		"Air Conditioner" : {
+			"turnOn"  : null,
+			"turnOff" : null
+		},
+		"TV" : {
+			"turnOn"  : null,
+			"turnOff" : null
+		},
+		"Light" : {
+			"turnOn"  : null,
+			"turnOff" : null
+		},
+		"Fan" : {
+			"turnOn"  : null,
+			"turnOff" : null
+		},
+		"Projector" : {
+			"turnOn"  : null,
+			"turnOff" : null
+		},
+		"DVD" : {
+			"turnOn"  : null,
+			"turnOff" : null
+		},
+		"Set Top Box" : {
+			"turnOn"  : null,
+			"turnOff" : null
+		},
+		"IPTV/Streamer" : {
+			"turnOn"  : null,
+			"turnOff" : null
+		},
+		"Speaker" : {
+			"turnOn"  : null,
+			"turnOff" : null
+		},
+		"Camera" : {
+			"turnOn"  : null,
+			"turnOff" : null
+		},
+		"Air Purifier" : {
+			"turnOn"  : null,
+			"turnOff" : null
+		},
+		"Water Heater" : {
+			"turnOn"  : null,
+			"turnOff" : null
+		},
+		"Vacuum Cleaner" : {
+			"turnOn"  : null,
+			"turnOff" : null
+		},
+		"Others" : {
+			"customize" : [
+				["buttonName", "text", "desc-others-button"]
+			]
+		}
+	}
+}
