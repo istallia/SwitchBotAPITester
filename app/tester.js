@@ -6,7 +6,7 @@ let switchbot_token = null;
 /* --- メインエリアの切り替え --- */
 const switchMainArea = event => {
 	/* ハッシュがなければ解散 */
-	const url = new URL(event.newURL);
+	const url = new URL(event.newURL || location.href);
 	if (url.hash.length < 1) url.hash = '#section-token';
 	/* 現在の要素を非表示 */
 	document.querySelector('.main.selected'   ).classList.remove('selected');
@@ -20,6 +20,11 @@ const switchMainArea = event => {
 	}
 };
 window.addEventListener('hashchange', switchMainArea);
+document.addEventListener('DOMContentLoaded', () => {
+	[... document.querySelectorAll('div.content > a')].forEach(a => {
+		a.addEventListener('click', switchMainArea);
+	});
+});
 
 
 
