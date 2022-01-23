@@ -90,12 +90,13 @@ const getDeviceList = event => {
 		[... select_set.querySelectorAll('option:not(.default-selection)')].forEach(option => option.remove());
 		select_get.querySelector('option.default-selection').selected = true;
 		select_set.querySelector('option.default-selection').selected = true;
-		response.data.body.deviceList.forEach(device => {
-			select_get.appendChild(createDeviceOption(device));
-			select_set.appendChild(createDeviceOption(device));
+		response.data.body.deviceList.forEach(async device => {
+			const supported_get = await window.switchbot.checkSupportedType(device.deviceType);
+			const supported_set = await window.switchbot.getCommands(device.deviceType) !== null;
+			if (supported_get) select_get.appendChild(createDeviceOption(device));
+			if (supported_set) select_set.appendChild(createDeviceOption(device));
 		});
 		response.data.body.infraredRemoteList.forEach(device => {
-			select_get.appendChild(createDeviceOption(device));
 			select_set.appendChild(createDeviceOption(device));
 		});
 		document.getElementById('get-device').disabled = true;
@@ -119,6 +120,56 @@ document.addEventListener('DOMContentLoaded', () => {
 			getDeviceList(event);
 		}
 	});
+});
+
+
+
+/* --- デバイス情報取得 --- */
+const getDeviceInfo = event => {
+	/* ボタン有効チェック */
+	const button = event.currentTarget;
+	if (button.disabled) return;
+	/* デバイスIDの取得とチェック */
+	const device_id = document.getElementById('devices-get').value;
+	if (device_id === '') return;
+	/* ボタン無効化 */
+	button.disabled = true;
+	/* リクエストを送信 */
+	window.switchbot.getDevice(device_id)
+	.then(response => {
+		/* 詳細エリアを更新 */
+		updateInspectorDetails(response);
+		/* 子をすべて消す */
+		const tbody = document.getElementById('device-info');
+		[... tbody.children].forEach(li => li.remove());
+		/* 失敗なら帰る */
+		button.disabled = false;
+		if (!response.code) {
+			const tr     = document.createElement('tr');
+			const td     = document.createElement('td');
+			td.innerText = response;
+			td.setAttribute('colspan', '2');
+			tr.appendChild(td);
+			tbody.appendChild(tr);
+			return;
+		}
+		/* 情報を追加 */
+		Object.keys(response.data.body).forEach(key => {
+			const tr           = document.createElement('tr');
+			const td_key       = document.createElement('td');
+			const td_value     = document.createElement('td');
+			td_key.innerText   = key;
+			td_value.innerText = response.data.body[key];
+			tr.appendChild(td_key);
+			tr.appendChild(td_value);
+			tbody.appendChild(tr);
+		});
+	});
+	/* URLバーを更新 */
+	window.switchbot.getAPI('getDevice', device_id).then(url => updateInspectorURL(url));
+};
+document.addEventListener('DOMContentLoaded', () => {
+	document.getElementById('get-device').addEventListener('click', getDeviceInfo);
 });
 
 

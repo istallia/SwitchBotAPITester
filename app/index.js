@@ -107,18 +107,18 @@ const URL_executeScene  = '/v1.0/scenes/{scene_id}/execute';
 
 
 /* --- API: URLを取得 --- */
-const getAPI = (event, name, device_id = null) => {
+const getAPI = (event, name, device_id = '') => {
 	switch (name) {
 		case 'getDeviceList':
 			return 'GET ' + URL_host + URL_getDeviceList;
 		case 'getDevice':
-			return 'GET ' + URL_host + URL_getDevice;
+			return 'GET ' + URL_host + URL_getDevice.replace('{device_id}', device_id);
 		case 'setDevice':
-			return 'GET ' + URL_host + URL_setDevice;
+			return 'GET ' + URL_host + URL_setDevice.replace('{device_id}', device_id);
 		case 'getScenes':
 			return 'GET ' + URL_host + URL_getScenes;
 		case 'executeScene':
-			return 'GET ' + URL_host + URL_executeScene;
+			return 'GET ' + URL_host + URL_executeScene.replace('{scene_id}', device_id);
 	}
 	return null;
 };
@@ -149,6 +149,24 @@ const getDeviceList = (event, token) => {
 	.catch(error => {return {error:error}});
 };
 ipcMain.handle('getDeviceList', getDeviceList);
+
+
+
+/* --- API: デバイス一覧を取得 --- */
+const getDevice = (event, device_id) => {
+	const url = URL_host + URL_getDevice.replace('{device_id}', device_id);
+	return axios.get(url, {
+		headers : {
+			'Authorization' : config.token || '',
+			'Content-Type'  : 'application/json; charset=utf8'
+		}
+	})
+	.then(response => {
+		return {data: response.data, code: response.status, request: {}};
+	})
+	.catch(error => {return {error:error}});
+};
+ipcMain.handle('getDevice', getDevice);
 
 
 

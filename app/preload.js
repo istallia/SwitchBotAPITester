@@ -11,7 +11,8 @@ contextBridge.exposeInMainWorld('switchbot', {
 	getAPI             : async (name, device_id = null) => await ipcRenderer.invoke('getAPI', name, device_id),
 	checkSupportedType : async type => await ipcRenderer.invoke('checkSupportedType', type),
 	getCommands        : async type => await ipcRenderer.invoke('getCommands', type),
-	getDeviceList      : async token => await ipcRenderer.invoke('getDeviceList', token)
+	getDeviceList      : async token => await ipcRenderer.invoke('getDeviceList', token),
+	getDevice          : async device_id => await ipcRenderer.invoke('getDevice', device_id)
 });
 
 

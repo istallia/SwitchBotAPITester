@@ -189,7 +189,8 @@ div.inspector {
 div.main {
   /* リスト */
   /* フォーム種別 */
-  /* フォーム細部 */ }
+  /* フォーム細部 */
+  /* テーブル */ }
   div.main > * {
     margin-left: 0.8rem; }
   div.main > h2 {
@@ -226,5 +227,12 @@ div.main {
   div.main input[type="text"] {
     background-color: inherit;
     color: inherit; }
+  div.main table, div.main th, div.main td {
+    border: 1px solid var(--color-border); }
+  div.main table {
+    padding: 0px;
+    border-collapse: collapse; }
+    div.main table th, div.main table td {
+      padding: 0.5rem 1.0rem; }
 
 /*# sourceMappingURL=index.css.map */

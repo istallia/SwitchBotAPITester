@@ -255,4 +255,15 @@ div.main {
 		background-color : inherit;
 		color            : inherit;
 	}
+	/* テーブル */
+	table, th, td {
+		border : 1px solid var(--color-border);
+	}
+	table {
+		padding         : 0px;
+		border-collapse : collapse;
+		th, td {
+			padding : 0.5rem 1.0rem;
+		}
+	}
 }
